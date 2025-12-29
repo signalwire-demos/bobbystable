@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+═══════════════════════════════════════════════════════════════════════════════
+Bobby's Table - Restaurant Reservation System
+═══════════════════════════════════════════════════════════════════════════════
+
+A WebRTC frontend for the Bobby's Table reservation agent.
+Displays current reservations grouped by date and handles real-time updates.
+
+═══════════════════════════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bobby's Table - Reservations</title>
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Bobby's Table - Restaurant Reservations">
+    <meta property="og:description" content="Make and manage restaurant reservations via phone">
+    <meta property="og:type" content="website">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- SignalWire SDK -->
+    <script src="https://cdn.signalwire.com/@signalwire/client"></script>
+</head>
+<body>
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Header
+         ───────────────────────────────────────────────────────────────────── -->
+    <header>
+        <h1>Bobby's Table</h1>
+        <p class="subtitle">Restaurant Reservation System</p>
+        <p id="phone-display" class="phone-number" style="display: none;"></p>
+    </header>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Main Content
+         ───────────────────────────────────────────────────────────────────── -->
+    <main>
+        <!-- Left Panel: Video and Controls -->
+        <section class="video-section">
+            <!-- Video Container -->
+            <div id="video-container">
+                <div class="placeholder">
+                    <img src="sigmond_pc.png" alt="Bobby - Click Connect to start">
+                </div>
+            </div>
+
+            <!-- Connection Controls -->
+            <div class="controls">
+                <button id="connect-btn" onclick="connect()">Connect</button>
+                <button id="disconnect-btn" onclick="disconnect()" disabled>Disconnect</button>
+            </div>
+
+            <!-- Status Display -->
+            <div id="status" class="status">
+                <span class="status-indicator"></span>
+                <span class="status-text">Ready to connect</span>
+            </div>
+
+            <!-- Event Log -->
+            <div class="event-log">
+                <h3>Activity Log</h3>
+                <div id="event-log" class="log-container"></div>
+            </div>
+        </section>
+
+        <!-- Right Panel: Reservations Dashboard -->
+        <section class="reservations-section">
+            <div class="reservations-header">
+                <h2>Reservations</h2>
+                <button id="refresh-btn" onclick="refreshReservations()">Refresh</button>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card">
+                    <span class="stat-value" id="total-reservations">0</span>
+                    <span class="stat-label">Total Reservations</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="todays-reservations">0</span>
+                    <span class="stat-label">Today</span>
+                </div>
+            </div>
+
+            <!-- Reservations List (grouped by date) -->
+            <div id="reservations-container" class="reservations-container">
+                <div class="no-reservations">
+                    <p>No reservations yet.</p>
+                    <p class="hint">Connect and make a reservation via phone!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         Footer
+         ───────────────────────────────────────────────────────────────────── -->
+    <footer>
+        <p>
+            <a href="https://github.com/signalwire" target="_blank">GitHub</a> |
+            <a href="https://developer.signalwire.com" target="_blank">Documentation</a>
+        </p>
+    </footer>
+
+    <!-- Application JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
