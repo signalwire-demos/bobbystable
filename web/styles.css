@@ -76,9 +76,22 @@ body {
    Header
    ───────────────────────────────────────────────────────────────────────────── */
 header {
+    position: relative;
     text-align: center;
     padding: var(--spacing-xl) var(--spacing-md);
     border-bottom: 1px solid var(--border-color);
+}
+
+.github-link {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.github-link:hover {
+    color: var(--text-primary);
 }
 
 header h1 {
