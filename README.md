@@ -230,7 +230,7 @@ When a reservation is found, the agent reads back the details and asks what the 
 
 ```bash
 # Clone the repository
-git clone <repo-url>
+git clone https://github.com/signalwire-demos/bobbystable.git
 cd bobbystable
 
 # Create virtual environment
