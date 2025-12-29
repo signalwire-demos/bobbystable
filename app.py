@@ -641,7 +641,7 @@ class ReservationAgent(AgentBase):
                 "properties": {
                     "phone": {
                         "type": "string",
-                        "description": "The phone number for the reservation"
+                        "description": "The phone number for the reservation in e.164 format"
                     }
                 },
                 "required": ["phone"]
@@ -1027,6 +1027,17 @@ class ReservationAgent(AgentBase):
         if base_url:
             self.set_param("video_idle_file", f"{base_url}/sigmond_pc_idle.mp4")
             self.set_param("video_talking_file", f"{base_url}/sigmond_pc_talking.mp4")
+
+        # Optional post-prompt URL from environment
+        post_prompt_url = os.environ.get("POST_PROMPT_URL")
+        if post_prompt_url:
+            self.set_post_prompt(
+                "Summarize the reservation call including: "
+                "whether a reservation was made, modified, or cancelled; "
+                "the guest name, party size, date and time if applicable; "
+                "and any special requests mentioned."
+            )
+            self.set_post_prompt_url(post_prompt_url)
 
         self.add_language(
             name="English",

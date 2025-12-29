@@ -260,6 +260,9 @@ SWML_PROXY_URL_BASE=https://your-ngrok-url.ngrok.io
 
 # Optional - display phone number on website
 PHONE_NUMBER=+1-555-123-4567
+
+# Optional - post-call summary webhook
+POST_PROMPT_URL=https://your-webhook.com/summary
 ```
 
 ### Running
