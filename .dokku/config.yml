@@ -50,7 +50,7 @@ environments:
       memory: 1g
       cpu: 2
     scale:
-      web: 2
+      web: 1  # Single instance required for in-memory storage
 
   staging:
     resources:
