@@ -1036,6 +1036,8 @@ class ReservationAgent(AgentBase):
 
     def on_swml_request(self, request_data, callback_path, request=None):
         """Configure dynamic settings for each request."""
+        self.set_param("end_of_speech_timeout", 700)
+
         base_url = self.get_full_url(include_auth=False)
 
         if base_url:
