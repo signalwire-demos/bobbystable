@@ -30,7 +30,7 @@ import os
 import time
 import logging
 import requests
-import uuid
+import random
 from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
@@ -75,9 +75,21 @@ MAX_PER_SLOT = 5  # Maximum reservations per time slot
 MAX_PARTY_SIZE = 20
 
 
-def generate_reservation_id():
-    """Generate a unique reservation ID."""
-    return f"res_{uuid.uuid4().hex[:8]}"
+def generate_confirmation_number():
+    """Generate a unique 6-digit confirmation number."""
+    return str(random.randint(100000, 999999))
+
+
+def say_digits(number_str: str) -> str:
+    """Convert a number string to spoken words for TTS.
+
+    Example: "123456" -> "one two three four five six"
+    """
+    digit_words = {
+        '0': 'zero', '1': 'one', '2': 'two', '3': 'three', '4': 'four',
+        '5': 'five', '6': 'six', '7': 'seven', '8': 'eight', '9': 'nine'
+    }
+    return ' '.join(digit_words.get(d, d) for d in number_str)
 
 
 def get_slot_availability(date: str, time_slot: str) -> dict:
@@ -792,9 +804,9 @@ class ReservationAgent(AgentBase):
                 )
 
             # Create the reservation
-            res_id = generate_reservation_id()
+            confirmation_number = generate_confirmation_number()
             reservation = {
-                "id": res_id,
+                "id": confirmation_number,
                 "name": pending["name"],
                 "party_size": pending["party_size"],
                 "date": pending["date"],
@@ -806,18 +818,20 @@ class ReservationAgent(AgentBase):
             }
 
             # Book the slot and save reservation
-            book_slot(pending["date"], pending["time"], res_id)
-            RESERVATIONS[res_id] = reservation
+            book_slot(pending["date"], pending["time"], confirmation_number)
+            RESERVATIONS[confirmation_number] = reservation
 
             # Clear pending reservation
             global_data["pending_reservation"] = {}
-            global_data["last_reservation_id"] = res_id
+            global_data["last_reservation_id"] = confirmation_number
 
+            # Use say_digits for TTS-friendly pronunciation
+            spoken_number = say_digits(confirmation_number)
             result = SwaigFunctionResult(
                 f"Your reservation is confirmed! "
                 f"{pending['name']}, party of {pending['party_size']}, "
                 f"on {pending['date']} at {pending['time']}. "
-                f"Your confirmation number is {res_id}. We look forward to seeing you!"
+                f"Your confirmation number is {spoken_number}. We look forward to seeing you!"
             )
             result.update_global_data(global_data)
 
