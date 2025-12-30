@@ -37,9 +37,10 @@ scale:
 # Custom Domains
 # ─────────────────────────────────────────────────────────────────────────────
 # Additional domains for this app (requires DNS configuration)
-# custom_domains:
-#   - www.example.com
-#   - api.example.com
+custom_domains:
+  - www.bobbystable.ai
+  - bobbystable.ai
+  - bobbystable.signalwire.me
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Environment-Specific Overrides
